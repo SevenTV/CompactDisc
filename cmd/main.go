@@ -12,6 +12,7 @@ import (
 
 	"github.com/bugsnag/panicwrap"
 	"github.com/seventv/compactdisc/internal/configure"
+	"github.com/seventv/compactdisc/internal/discord"
 	"github.com/seventv/compactdisc/internal/global"
 	"go.uber.org/zap"
 )
@@ -60,7 +61,16 @@ func main() {
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 
-	_, cancel := global.WithCancel(global.New(context.Background(), config))
+	gctx, cancel := global.WithCancel(global.New(context.Background(), config))
+
+	{
+		gctx.Inst().Discord, err = discord.New(gctx, gctx.Config().Discord.Token)
+		if err != nil {
+			zap.S().Fatalw("failed to setup discord", "error", err)
+		}
+
+		zap.S().Infow("discord, ok", "user", gctx.Inst().Discord.Identity().Username)
+	}
 
 	wg := sync.WaitGroup{}
 
