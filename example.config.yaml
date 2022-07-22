@@ -2,8 +2,25 @@
 level: info
 
 discord:
+  guild_id: 123456789012345678
   token: ""
 
 http:
   addr: "0.0.0.0"
   port: 3000
+
+# MongoDB Settings
+mongo:
+  uri: mongodb://username:password@url:port/?authSource=db
+  db: db
+  direct: false
+
+# Redis Settings
+redis:
+  addresses:
+    - redis://foo.bar
+  sentinel: false
+  master_name: ""
+  username: ""
+  password: ""
+  database: 0

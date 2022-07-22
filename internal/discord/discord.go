@@ -2,6 +2,7 @@ package discord
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -16,15 +17,21 @@ type discordInst struct {
 }
 
 func New(ctx context.Context, token string) (Instance, error) {
-	ses, err := discordgo.New(token)
+	ses, err := discordgo.New(fmt.Sprintf("Bot %s", token))
 	if err != nil {
 		return nil, err
 	}
 
 	// Open connection to discord gateway
+	ses.Identify.Intents = discordgo.MakeIntent(ses.Identify.Intents | discordgo.IntentsGuildMembers)
 	if err := ses.Open(); err != nil {
 		return nil, err
 	}
+
+	go func() {
+		<-ctx.Done()
+		ses.Close()
+	}()
 
 	return &discordInst{
 		ses: ses,

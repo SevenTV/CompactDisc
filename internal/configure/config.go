@@ -132,7 +132,8 @@ type Config struct {
 	} `mapstructure:"k8s" json:"k8s"`
 
 	Discord struct {
-		Token string `mapstructure:"token" json:"token"`
+		GuildID string `mapstructure:"guild_id" json:"guild_id"`
+		Token   string `mapstructure:"token" json:"token"`
 	} `mapstructure:"discord" json:"discord"`
 
 	Redis struct {
@@ -164,10 +165,7 @@ type Config struct {
 	Http struct {
 		Addr          string `mapstructure:"addr" json:"addr"`
 		VersionSuffix string `mapstructure:"version_suffix" json:"version_suffix"`
-		Ports         struct {
-			GQL  int `mapstructure:"gql" json:"gql"`
-			REST int `mapstructure:"rest" json:"rest"`
-		} `mapstructure:"ports" json:"ports"`
+		Port          int    `mapstructure:"port" json:"port"`
 
 		Cookie struct {
 			Domain string `mapstructure:"domain" json:"domain"`
