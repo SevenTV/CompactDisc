@@ -13,7 +13,6 @@ import (
 )
 
 func SyncUser(gctx global.Context, ctx context.Context, req client.Request[client.RequestPayloadSyncUser]) error {
-
 	userID := req.Data.UserID
 
 	appRoles, err := gctx.Inst().Query.Roles(ctx, bson.M{})
@@ -45,6 +44,7 @@ func SyncUser(gctx global.Context, ctx context.Context, req client.Request[clien
 		member, err = dis.GuildMember(guildID, con.ID)
 		_ = dis.State.MemberAdd(member)
 	}
+
 	if err != nil {
 		z.Infow("user is not in the guild", "error", err)
 		return nil // ignore, because the user is not a member of the guild
@@ -52,6 +52,7 @@ func SyncUser(gctx global.Context, ctx context.Context, req client.Request[clien
 
 	botRank := 0
 	botMember, err := dis.State.Member(guildID, dis.State.User.ID)
+
 	if err != nil {
 		z.Errorw("bot is not in the guild", "error", err)
 		return err
@@ -85,6 +86,7 @@ func SyncUser(gctx global.Context, ctx context.Context, req client.Request[clien
 
 		roleID := strconv.Itoa(int(rol.DiscordID))
 		grole, ok := guildRoles[roleID]
+
 		if !ok {
 			continue // ignore, because the role is not in the guild
 		}
@@ -97,6 +99,7 @@ func SyncUser(gctx global.Context, ctx context.Context, req client.Request[clien
 			// remove the role from the result
 			if pos := utils.SliceIndexOf(finalRoles, roleID); pos != -1 {
 				finalRoles = utils.SliceRemove(finalRoles, pos)
+
 				del = append(del, grole.Name)
 			}
 		} else { // user has this role
@@ -108,7 +111,6 @@ func SyncUser(gctx global.Context, ctx context.Context, req client.Request[clien
 			finalRoles = append(finalRoles, roleID)
 			add = append(add, grole.Name)
 		}
-
 	}
 
 	if len(add) == 0 && len(del) == 0 {

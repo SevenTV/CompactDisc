@@ -35,7 +35,7 @@ func Start(gctx global.Context) (<-chan uint8, error) {
 
 			body := client.Request[json.RawMessage]{}
 			if err := json.Unmarshal(ctx.Request.Body(), &body); err != nil {
-				ctx.WriteString(err.Error())
+				_, _ = ctx.WriteString(err.Error())
 				ctx.SetStatusCode(fasthttp.StatusBadRequest)
 				return
 			}
@@ -48,7 +48,7 @@ func Start(gctx global.Context) (<-chan uint8, error) {
 			}
 
 			if err != nil {
-				ctx.WriteString(err.Error())
+				_, _ = ctx.WriteString(err.Error())
 				ctx.SetStatusCode(fasthttp.StatusBadRequest)
 			}
 		},
