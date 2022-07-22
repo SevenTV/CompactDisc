@@ -131,6 +131,10 @@ type Config struct {
 		PodName  string `mapstructure:"pod_name" json:"pod_name"`
 	} `mapstructure:"k8s" json:"k8s"`
 
+	Discord struct {
+		Token string `mapstructure:"token" json:"token"`
+	} `mapstructure:"discord" json:"discord"`
+
 	Redis struct {
 		Username   string   `mapstructure:"username" json:"username"`
 		Password   string   `mapstructure:"password" json:"password"`
