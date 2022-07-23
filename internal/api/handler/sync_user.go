@@ -6,13 +6,13 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/seventv/common/utils"
-	"github.com/seventv/compactdisc/client"
+	"github.com/seventv/compactdisc"
 	"github.com/seventv/compactdisc/internal/global"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.uber.org/zap"
 )
 
-func SyncUser(gctx global.Context, ctx context.Context, req client.Request[client.RequestPayloadSyncUser]) error {
+func SyncUser(gctx global.Context, ctx context.Context, req compactdisc.Request[compactdisc.RequestPayloadSyncUser]) error {
 	userID := req.Data.UserID
 
 	appRoles, err := gctx.Inst().Query.Roles(ctx, bson.M{})
@@ -91,12 +91,12 @@ func SyncUser(gctx global.Context, ctx context.Context, req client.Request[clien
 			continue // ignore, because the role is not in the guild
 		}
 
-		if !utils.Contains(user.RoleIDs, rol.ID) { // user does not have this role
+		if !utils.Contains(user.RoleIDs, rol.ID) || req.Data.Revoke { // user does not have this role
 			if grole.Position >= botRank || grole.Managed {
 				continue // ignore, because the bot cannot edit this role
 			}
 
-			// remove the role from the result
+			// will remove the role from the discord member
 			if pos := utils.SliceIndexOf(finalRoles, roleID); pos != -1 {
 				finalRoles = utils.SliceRemove(finalRoles, pos)
 
@@ -107,7 +107,7 @@ func SyncUser(gctx global.Context, ctx context.Context, req client.Request[clien
 				continue // role is already attributed in discord
 			}
 
-			// add the role to the result
+			// will add the role to the discord member
 			finalRoles = append(finalRoles, roleID)
 			add = append(add, grole.Name)
 		}

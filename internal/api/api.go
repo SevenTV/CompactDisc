@@ -8,7 +8,7 @@ import (
 
 	"github.com/fasthttp/router"
 	"github.com/seventv/common/utils"
-	"github.com/seventv/compactdisc/client"
+	"github.com/seventv/compactdisc"
 	"github.com/seventv/compactdisc/internal/api/handler"
 	"github.com/seventv/compactdisc/internal/global"
 	"github.com/valyala/fasthttp"
@@ -33,7 +33,7 @@ func Start(gctx global.Context) (<-chan uint8, error) {
 				return
 			}
 
-			body := client.Request[json.RawMessage]{}
+			body := compactdisc.Request[json.RawMessage]{}
 			if err := json.Unmarshal(ctx.Request.Body(), &body); err != nil {
 				_, _ = ctx.WriteString(err.Error())
 				ctx.SetStatusCode(fasthttp.StatusBadRequest)
@@ -43,8 +43,8 @@ func Start(gctx global.Context) (<-chan uint8, error) {
 			zap.S().Infow("executing operation", "operation", body.Operation)
 
 			switch body.Operation {
-			case client.OperationNameSyncUser:
-				err = handler.SyncUser(gctx, ctx, client.ConvertRequest[client.RequestPayloadSyncUser](body))
+			case compactdisc.OperationNameSyncUser:
+				err = handler.SyncUser(gctx, ctx, compactdisc.ConvertRequest[compactdisc.RequestPayloadSyncUser](body))
 			}
 
 			if err != nil {
