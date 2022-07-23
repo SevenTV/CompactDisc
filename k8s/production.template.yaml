@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compactdisc
+  namespace: app
+spec:
+  selector:
+    matchLabels:
+      app: compactdisc
+  template:
+    metadata:
+      labels:
+        app: compactdisc
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: compactdisc-config
+            defaultMode: 420
+      containers:
+        - name: compactdisc
+          image: ${IMAGE}
+          ports:
+            - name: api
+              containerPort: 3000
+              protocol: TCP
+            - name: health
+              containerPort: 9200
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: compactdisc-secret
+          env:
+            - name: API_K8S_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: API_K8S_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            limits:
+              cpu: 200m
+              memory: 384Mi
+            requests:
+              cpu: 150m
+              memory: 384Mi
+          volumeMounts:
+            - name: config
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+          livenessProbe:
+            tcpSocket:
+              port: health
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            tcpSocket:
+              port: health
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: compactdisc
+  namespace: app
+  labels:
+    app: compactdisc
+spec:
+  ports:
+    - name: api
+      protocol: TCP
+      port: 3000
+      targetPort: api
+    - name: health
+      protocol: TCP
+      port: 9200
+      targetPort: health
+  selector:
+    app: compactdisc
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: compactdisc-config
+  namespace: app
+data:
+  config.yaml: |
+    # Log level
+    level: info
+
+    http:
+      addr: "0.0.0.0"
+      port: 3000
+
+    health:
+      enabled: true
+      bind: 0.0.0.0:9200
