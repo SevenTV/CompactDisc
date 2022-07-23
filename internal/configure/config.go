@@ -131,6 +131,11 @@ type Config struct {
 		PodName  string `mapstructure:"pod_name" json:"pod_name"`
 	} `mapstructure:"k8s" json:"k8s"`
 
+	Discord struct {
+		GuildID string `mapstructure:"guild_id" json:"guild_id"`
+		Token   string `mapstructure:"token" json:"token"`
+	} `mapstructure:"discord" json:"discord"`
+
 	Redis struct {
 		Username   string   `mapstructure:"username" json:"username"`
 		Password   string   `mapstructure:"password" json:"password"`
@@ -158,17 +163,8 @@ type Config struct {
 	} `mapstructure:"monitoring" json:"monitoring"`
 
 	Http struct {
-		Addr          string `mapstructure:"addr" json:"addr"`
-		VersionSuffix string `mapstructure:"version_suffix" json:"version_suffix"`
-		Ports         struct {
-			GQL  int `mapstructure:"gql" json:"gql"`
-			REST int `mapstructure:"rest" json:"rest"`
-		} `mapstructure:"ports" json:"ports"`
-
-		Cookie struct {
-			Domain string `mapstructure:"domain" json:"domain"`
-			Secure bool   `mapstructure:"secure" json:"secure"`
-		} `mapstructure:"cookie" json:"cookie"`
+		Addr string `mapstructure:"addr" json:"addr"`
+		Port int    `mapstructure:"port" json:"port"`
 	} `mapstructure:"http" json:"http"`
 }
 
