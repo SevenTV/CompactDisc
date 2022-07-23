@@ -43,7 +43,9 @@ func SyncUser(gctx global.Context, ctx context.Context, req compactdisc.Request[
 	member, err := dis.State.Member(guildID, con.ID)
 	if err != nil { // member is not in state, so we must fetch them
 		member, err = dis.GuildMember(guildID, con.ID)
-		_ = dis.State.MemberAdd(member)
+		if err == nil {
+			_ = dis.State.MemberAdd(member)
+		}
 	}
 
 	if err != nil {
