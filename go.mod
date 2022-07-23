@@ -6,7 +6,7 @@ require (
 	github.com/bugsnag/panicwrap v1.3.4
 	github.com/bwmarrin/discordgo v0.25.0
 	github.com/prometheus/client_golang v1.12.2
-	github.com/seventv/common v0.0.0-20220720073440-87800b448acd
+	github.com/seventv/common v0.0.0-20220723113936-4f27199129f8
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.12.0
 	go.uber.org/zap v1.21.0
