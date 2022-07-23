@@ -18,6 +18,7 @@ import (
 	"github.com/seventv/compactdisc/internal/configure"
 	"github.com/seventv/compactdisc/internal/discord"
 	"github.com/seventv/compactdisc/internal/global"
+	"github.com/seventv/compactdisc/internal/health"
 	"go.uber.org/zap"
 )
 
@@ -115,6 +116,15 @@ func main() {
 	}
 
 	wg := sync.WaitGroup{}
+
+	if gctx.Config().Health.Enabled {
+		wg.Add(1)
+
+		go func() {
+			defer wg.Done()
+			<-health.New(gctx)
+		}()
+	}
 
 	apiDone, err := api.Start(gctx)
 	if err != nil {

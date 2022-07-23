@@ -163,14 +163,8 @@ type Config struct {
 	} `mapstructure:"monitoring" json:"monitoring"`
 
 	Http struct {
-		Addr          string `mapstructure:"addr" json:"addr"`
-		VersionSuffix string `mapstructure:"version_suffix" json:"version_suffix"`
-		Port          int    `mapstructure:"port" json:"port"`
-
-		Cookie struct {
-			Domain string `mapstructure:"domain" json:"domain"`
-			Secure bool   `mapstructure:"secure" json:"secure"`
-		} `mapstructure:"cookie" json:"cookie"`
+		Addr string `mapstructure:"addr" json:"addr"`
+		Port int    `mapstructure:"port" json:"port"`
 	} `mapstructure:"http" json:"http"`
 }
 

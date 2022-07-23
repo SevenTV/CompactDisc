@@ -101,3 +101,7 @@ data:
     http:
       addr: "0.0.0.0"
       port: 3000
+
+    health:
+      enabled: true
+      bind: 0.0.0.0:9200
