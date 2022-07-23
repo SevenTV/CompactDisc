@@ -49,6 +49,7 @@ type RequestPayloadSyncUser struct {
 
 type Instance interface {
 	SyncUser(userID primitive.ObjectID) (*http.Response, error)
+	RevokeUser(userID primitive.ObjectID) (*http.Response, error)
 }
 
 type cdInst struct {
@@ -80,6 +81,16 @@ func (inst *cdInst) SyncUser(userID primitive.ObjectID) (*http.Response, error) 
 		Operation: OperationNameSyncUser,
 		Data: RequestPayloadSyncUser{
 			UserID: userID,
+		},
+	}.ToRaw())
+}
+
+func (inst *cdInst) RevokeUser(userID primitive.ObjectID) (*http.Response, error) {
+	return inst.request(Request[RequestPayloadSyncUser]{
+		Operation: OperationNameSyncUser,
+		Data: RequestPayloadSyncUser{
+			UserID: userID,
+			Revoke: true,
 		},
 	}.ToRaw())
 }
