@@ -9,6 +9,7 @@ import (
 	"github.com/seventv/compactdisc"
 	"github.com/seventv/compactdisc/internal/global"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.uber.org/zap"
 )
 
@@ -79,6 +80,11 @@ func SyncUser(gctx global.Context, ctx context.Context, req compactdisc.Request[
 	add := []string{}
 	del := []string{}
 
+	userRoleIDs := make([]primitive.ObjectID, len(user.Roles))
+	for i, rol := range user.Roles {
+		userRoleIDs[i] = rol.ID
+	}
+
 	for _, rol := range appRoles {
 		if rol.DiscordID == 0 {
 			continue // ignore, because the role is not linked to discord
@@ -91,7 +97,7 @@ func SyncUser(gctx global.Context, ctx context.Context, req compactdisc.Request[
 			continue // ignore, because the role is not in the guild
 		}
 
-		if !utils.Contains(user.RoleIDs, rol.ID) || req.Data.Revoke { // user does not have this role
+		if !utils.Contains(userRoleIDs, rol.ID) || req.Data.Revoke { // user does not have this role
 			if grole.Position >= botRank || grole.Managed {
 				continue // ignore, because the bot cannot edit this role
 			}
