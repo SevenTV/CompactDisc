@@ -3,6 +3,7 @@ level: info
 
 discord:
   guild_id: 123456789012345678
+  default_role_id: 123456789012345678
   token: ""
 
 http:
