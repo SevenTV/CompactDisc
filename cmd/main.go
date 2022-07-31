@@ -10,8 +10,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/seventv/compactdisc/internal/discord/handler"
-
 	"github.com/bugsnag/panicwrap"
 	"github.com/seventv/common/mongo"
 	"github.com/seventv/common/redis"
@@ -20,6 +18,7 @@ import (
 	"github.com/seventv/compactdisc/internal/configure"
 	"github.com/seventv/compactdisc/internal/discord"
 	"github.com/seventv/compactdisc/internal/global"
+	"github.com/seventv/compactdisc/internal/handler"
 	"github.com/seventv/compactdisc/internal/health"
 	"go.uber.org/zap"
 )
@@ -105,12 +104,12 @@ func main() {
 	}
 
 	{
-		handler.DefaultRoleId = config.Discord.DefaultRoleId
 		gctx.Inst().Discord, err = discord.New(gctx, config.Discord.Token)
 		if err != nil {
 			zap.S().Fatalw("failed to setup discord", "error", err)
 		}
 
+		handler.Register(gctx, gctx.Inst().Discord.Session())
 		zap.S().Infow("discord, ok")
 	}
 

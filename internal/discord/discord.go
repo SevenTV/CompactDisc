@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/seventv/compactdisc/internal/discord/handler"
 )
 
 type Instance interface {
@@ -22,8 +21,6 @@ func New(ctx context.Context, token string) (Instance, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	handler.Register(ses)
 
 	// Open connection to discord gateway
 	ses.Identify.Intents = discordgo.MakeIntent(ses.Identify.Intents | discordgo.IntentsGuildMembers)
