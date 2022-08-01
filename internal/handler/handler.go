@@ -21,9 +21,6 @@ if gctx.Config().Discord.DefaultRoleId != "" {
 // this is for users already in the guild who do not yet have it
 func messageCreate(gctx global.Context) func(s *discordgo.Session, m *discordgo.MessageCreate) {
 	return func(s *discordgo.Session, m *discordgo.MessageCreate) {
-		if gctx.Config().Discord.DefaultRoleId == "" {
-			zap.S().Fatalw("default role id not set")
-		}
 
 		if !utils.Contains(m.Member.Roles, gctx.Config().Discord.DefaultRoleId) {
 			finalRoles := append(m.Member.Roles, gctx.Config().Discord.DefaultRoleId)
