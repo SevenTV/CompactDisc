@@ -8,7 +8,12 @@ import (
 )
 
 func Register(gctx global.Context, session *discordgo.Session) {
-	session.AddHandler(messageCreate(gctx))
+if gctx.Config().Discord.DefaultRoleId != "" {
+    session.AddHandler(messageCreate(gctx))
+    session.AddHandler(guildMemberAdd(gctx))
+} else {
+    zap.S().Warnw("default role id not set")
+}
 	session.AddHandler(guildMemberAdd(gctx))
 }
 
