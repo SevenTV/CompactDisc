@@ -38,9 +38,6 @@ func messageCreate(gctx global.Context) func(s *discordgo.Session, m *discordgo.
 // gives the user the default role on join
 func guildMemberAdd(gctx global.Context) func(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
 	return func(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
-		if gctx.Config().Discord.DefaultRoleId == "" {
-			zap.S().Fatalw("default role id not set")
-		}
 
 		finalRoles := append(m.Roles, gctx.Config().Discord.DefaultRoleId)
 
