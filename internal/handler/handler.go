@@ -20,6 +20,10 @@ func Register(gctx global.Context, session *discordgo.Session) {
 // this is for users already in the guild who do not yet have it
 func messageCreate(gctx global.Context) func(s *discordgo.Session, m *discordgo.MessageCreate) {
 	return func(s *discordgo.Session, m *discordgo.MessageCreate) {
+		if m.Member == nil {
+			return
+		}
+
 		if !utils.Contains(m.Member.Roles, gctx.Config().Discord.DefaultRoleId) {
 			finalRoles := append(m.Member.Roles, gctx.Config().Discord.DefaultRoleId)
 
