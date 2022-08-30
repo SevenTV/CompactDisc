@@ -34,7 +34,7 @@ func SendMessage(gctx global.Context, ctx context.Context, req compactdisc.Reque
 	)
 
 	if webhook != nil {
-		msg, err = gctx.Inst().Discord.Session().WebhookExecute(webhook.ID, webhook.Token, false, &discordgo.WebhookParams{
+		msg, err = gctx.Inst().Discord.Session().WebhookExecute(webhook.ID, webhook.Token, true, &discordgo.WebhookParams{
 			Content:         req.Data.Message.Content,
 			Username:        gctx.Inst().Discord.Identity().Username,
 			AvatarURL:       gctx.Inst().Discord.Identity().AvatarURL("128"),
