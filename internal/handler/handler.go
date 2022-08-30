@@ -27,7 +27,9 @@ func messageCreate(gctx global.Context) func(s *discordgo.Session, m *discordgo.
 		if !utils.Contains(m.Member.Roles, gctx.Config().Discord.DefaultRoleId) {
 			finalRoles := append(m.Member.Roles, gctx.Config().Discord.DefaultRoleId)
 
-			if err := s.GuildMemberEdit(m.GuildID, m.Author.ID, finalRoles); err != nil {
+			if _, err := s.GuildMemberEdit(m.GuildID, m.Author.ID, &discordgo.GuildMemberParams{
+				Roles: &finalRoles,
+			}); err != nil {
 				zap.S().Errorw("failed to add default role to user", "error", err)
 			}
 		}
@@ -39,7 +41,9 @@ func guildMemberAdd(gctx global.Context) func(s *discordgo.Session, m *discordgo
 	return func(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
 		finalRoles := append(m.Roles, gctx.Config().Discord.DefaultRoleId)
 
-		if err := s.GuildMemberEdit(m.GuildID, m.User.ID, finalRoles); err != nil {
+		if _, err := s.GuildMemberEdit(m.GuildID, m.User.ID, &discordgo.GuildMemberParams{
+			Roles: &finalRoles,
+		}); err != nil {
 			zap.S().Errorw("failed to add default role to user", "error", err)
 		}
 	}

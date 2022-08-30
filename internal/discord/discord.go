@@ -23,7 +23,7 @@ func New(ctx context.Context, token string) (Instance, error) {
 	}
 
 	// Open connection to discord gateway
-	ses.Identify.Intents = discordgo.MakeIntent(ses.Identify.Intents | discordgo.IntentsGuildMembers | discordgo.IntentDirectMessages)
+	ses.Identify.Intents = discordgo.MakeIntent(ses.Identify.Intents | discordgo.IntentsMessageContent | discordgo.IntentsGuildMembers | discordgo.IntentDirectMessages)
 	if err := ses.Open(); err != nil {
 		return nil, err
 	}

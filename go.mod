@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/bugsnag/panicwrap v1.3.4
-	github.com/bwmarrin/discordgo v0.25.0
+	github.com/bwmarrin/discordgo v0.26.1
 	github.com/prometheus/client_golang v1.12.2
 	github.com/seventv/common v0.0.0-20220723113936-4f27199129f8
 	github.com/spf13/pflag v1.0.5
