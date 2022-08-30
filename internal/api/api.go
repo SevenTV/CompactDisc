@@ -9,7 +9,7 @@ import (
 	"github.com/fasthttp/router"
 	"github.com/seventv/common/utils"
 	"github.com/seventv/compactdisc"
-	"github.com/seventv/compactdisc/internal/api/commands"
+	"github.com/seventv/compactdisc/internal/api/operations"
 	"github.com/seventv/compactdisc/internal/global"
 	"github.com/valyala/fasthttp"
 	"go.uber.org/zap"
@@ -44,9 +44,9 @@ func Start(gctx global.Context) (<-chan uint8, error) {
 
 			switch body.Operation {
 			case compactdisc.OperationNameSyncUser:
-				err = commands.SyncUser(gctx, ctx, compactdisc.ConvertRequest[compactdisc.RequestPayloadSyncUser](body))
+				err = operations.SyncUser(gctx, ctx, compactdisc.ConvertRequest[compactdisc.RequestPayloadSyncUser](body))
 			case compactdisc.OperationNameSendMessage:
-				err = commands.SendMessage(gctx, ctx, compactdisc.ConvertRequest[compactdisc.RequestPayloadSendMessage](body))
+				err = operations.SendMessage(gctx, ctx, compactdisc.ConvertRequest[compactdisc.RequestPayloadSendMessage](body))
 			}
 
 			if err != nil {

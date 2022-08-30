@@ -1,4 +1,4 @@
-package commands
+package operations
 
 import (
 	"context"
@@ -126,7 +126,9 @@ func SyncUser(gctx global.Context, ctx context.Context, req compactdisc.Request[
 		return nil
 	}
 
-	if err := dis.GuildMemberEdit(gctx.Config().Discord.GuildID, member.User.ID, finalRoles); err != nil {
+	if _, err := dis.GuildMemberEdit(gctx.Config().Discord.GuildID, member.User.ID, &discordgo.GuildMemberParams{
+		Roles: &finalRoles,
+	}); err != nil {
 		z.Errorw("failed to update discord roles")
 		return err
 	}

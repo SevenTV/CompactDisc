@@ -15,6 +15,7 @@ import (
 	"github.com/seventv/common/redis"
 	"github.com/seventv/common/structures/v3/query"
 	"github.com/seventv/compactdisc/internal/api"
+	"github.com/seventv/compactdisc/internal/commands"
 	"github.com/seventv/compactdisc/internal/configure"
 	"github.com/seventv/compactdisc/internal/discord"
 	"github.com/seventv/compactdisc/internal/global"
@@ -110,6 +111,10 @@ func main() {
 		}
 
 		handler.Register(gctx, gctx.Inst().Discord.Session())
+		if err := commands.Setup(gctx); err != nil {
+			zap.S().Fatalw("failed to setup commands", "error", err)
+		}
+
 		zap.S().Infow("discord, ok")
 	}
 
