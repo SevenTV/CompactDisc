@@ -27,7 +27,7 @@ func Setup(gctx global.Context) error {
 
 	registeredCommands, _ := disc.ApplicationCommands(appID, guildID)
 	for _, cmd := range registeredCommands {
-		disc.ApplicationCommandDelete(appID, guildID, cmd.ID)
+		_ = disc.ApplicationCommandDelete(appID, guildID, cmd.ID)
 	}
 
 	commands := []*Command{
@@ -44,7 +44,7 @@ func Setup(gctx global.Context) error {
 			if err := cmd.Handler(s, i); err != nil {
 				zap.S().Errorw("failed to handle command", "command", cmd.Data.Name, "error", err)
 
-				s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				err := s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 					Type: discordgo.InteractionResponseChannelMessageWithSource,
 					Data: &discordgo.InteractionResponseData{
 						Content:         err.Error(),
@@ -52,6 +52,9 @@ func Setup(gctx global.Context) error {
 						Flags:           discordgo.MessageFlagsEphemeral,
 					},
 				})
+				if err != nil {
+					zap.S().Errorw("failed to respond to command about the failure to handle the command", "error", err)
+				}
 			}
 		})
 	}

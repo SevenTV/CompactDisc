@@ -111,7 +111,9 @@ func main() {
 		}
 
 		handler.Register(gctx, gctx.Inst().Discord.Session())
-		commands.Setup(gctx)
+		if err := commands.Setup(gctx); err != nil {
+			zap.S().Fatalw("failed to setup commands", "error", err)
+		}
 
 		zap.S().Infow("discord, ok")
 	}

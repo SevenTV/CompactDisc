@@ -58,7 +58,6 @@ func UserInfo(gctx global.Context, appID string, guildID string) *Command {
 			}
 
 			// Format an embed
-			fmt.Println(avatarURL)
 			embed := &discordgo.MessageEmbed{
 				Type:        discordgo.EmbedTypeRich,
 				Title:       fmt.Sprintf("%s (%s)", user.DisplayName, user.Username),

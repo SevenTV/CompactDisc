@@ -106,7 +106,6 @@ func messageDelete(gctx global.Context) func(s *discordgo.Session, m *discordgo.
 // guildMemberAdd is a handler for new joins
 func guildMemberAdd(gctx global.Context) func(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
 	return func(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
-
 		if gctx.Config().Discord.DefaultRoleId != "" {
 			finalRoles := append(m.Roles, gctx.Config().Discord.DefaultRoleId)
 
