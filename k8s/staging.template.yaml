@@ -102,6 +102,10 @@ data:
       addr: "0.0.0.0"
       port: 3000
 
+    discord:
+      channels:
+        activity_feed: "817375925271527449"
+
     health:
       enabled: true
       bind: 0.0.0.0:9200

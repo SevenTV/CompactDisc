@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/bwmarrin/discordgo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -35,11 +36,16 @@ func (req Request[T]) ToRaw() Request[json.RawMessage] {
 type OperationName string
 
 const (
-	OperationNameSyncUser = "SYNC_USER"
+	OperationNameSyncUser    = "SYNC_USER"
+	OperationNameSendMessage = "SEND_MESSAGE"
+)
+
+type (
+	MessageSend = discordgo.MessageSend
 )
 
 type RequestPayload interface {
-	json.RawMessage | RequestPayloadSyncUser
+	json.RawMessage | RequestPayloadSyncUser | RequestPayloadSendMessage
 }
 
 type RequestPayloadSyncUser struct {
@@ -47,9 +53,16 @@ type RequestPayloadSyncUser struct {
 	Revoke bool               `json:"revoke"`
 }
 
+type RequestPayloadSendMessage struct {
+	Channel string      `json:"channel"`
+	Message MessageSend `json:"message"`
+	Webhook bool        `json:"webhook"`
+}
+
 type Instance interface {
 	SyncUser(userID primitive.ObjectID) (*http.Response, error)
 	RevokeUser(userID primitive.ObjectID) (*http.Response, error)
+	SendMessage(channel string, message MessageSend, webhook bool) (*http.Response, error)
 }
 
 type cdInst struct {
@@ -91,6 +104,18 @@ func (inst *cdInst) RevokeUser(userID primitive.ObjectID) (*http.Response, error
 		Data: RequestPayloadSyncUser{
 			UserID: userID,
 			Revoke: true,
+		},
+	}.ToRaw())
+}
+
+// SendMessage implements Instance
+func (inst *cdInst) SendMessage(channel string, message discordgo.MessageSend, webhook bool) (*http.Response, error) {
+	return inst.request(Request[RequestPayloadSendMessage]{
+		Operation: OperationNameSendMessage,
+		Data: RequestPayloadSendMessage{
+			Channel: channel,
+			Message: message,
+			Webhook: webhook,
 		},
 	}.ToRaw())
 }

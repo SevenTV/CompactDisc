@@ -132,9 +132,10 @@ type Config struct {
 	} `mapstructure:"k8s" json:"k8s"`
 
 	Discord struct {
-		GuildID       string `mapstructure:"guild_id" json:"guild_id"`
-		DefaultRoleId string `mapstructure:"default_role_id" json:"default_role_id"`
-		Token         string `mapstructure:"token" json:"token"`
+		GuildID       string            `mapstructure:"guild_id" json:"guild_id"`
+		DefaultRoleId string            `mapstructure:"default_role_id" json:"default_role_id"`
+		Token         string            `mapstructure:"token" json:"token"`
+		Channels      map[string]string `mapstructure:"channels" json:"channels"`
 	} `mapstructure:"discord" json:"discord"`
 
 	Redis struct {
