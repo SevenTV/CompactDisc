@@ -98,6 +98,9 @@ data:
     # Log level
     level: info
 
+    cdn_url: cdn.7tv.dev
+    website_url: https://7tv.dev
+
     http:
       addr: "0.0.0.0"
       port: 3000
@@ -105,6 +108,7 @@ data:
     discord:
       channels:
         activity_feed: "817375925271527449"
+        mod_logs: "989251544165777450"
 
     health:
       enabled: true
