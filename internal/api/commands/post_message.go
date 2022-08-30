@@ -2,7 +2,6 @@ package commands
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/seventv/compactdisc"
@@ -17,9 +16,9 @@ func SendMessage(gctx global.Context, ctx context.Context, req compactdisc.Reque
 	}
 
 	var webhook *discordgo.Webhook
+
 	if req.Data.Webhook {
 		hooks, _ := gctx.Inst().Discord.Session().ChannelWebhooks(channelID)
-		fmt.Println("hi", hooks)
 		if len(hooks) > 0 {
 			webhook = hooks[0]
 		}
@@ -45,7 +44,6 @@ func SendMessage(gctx global.Context, ctx context.Context, req compactdisc.Reque
 			Embeds:          req.Data.Message.Embeds,
 			AllowedMentions: req.Data.Message.AllowedMentions,
 		})
-
 	} else {
 		msg, err = gctx.Inst().Discord.Session().ChannelMessageSendComplex(channelID, &req.Data.Message)
 	}
