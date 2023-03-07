@@ -109,6 +109,7 @@ data:
       channels:
         activity_feed: "817375925271527449"
         mod_logs: "989251544165777450"
+        mod_actor_tracker: "1080982942156869743"
         events: "1015281319758004335"
 
     health:

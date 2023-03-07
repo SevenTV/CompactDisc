@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/bugsnag/panicwrap"
+	"github.com/seventv/api/data/query"
 	"github.com/seventv/common/mongo"
 	"github.com/seventv/common/redis"
-	"github.com/seventv/common/structures/v3/query"
 	"github.com/seventv/compactdisc/internal/api"
 	"github.com/seventv/compactdisc/internal/commands"
 	"github.com/seventv/compactdisc/internal/configure"
