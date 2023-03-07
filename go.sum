@@ -299,6 +299,8 @@ github.com/seventv/api v0.0.0-20221211205820-8dc363685efd h1:qP3dlN5BHdd7K0MZO3c
 github.com/seventv/api v0.0.0-20221211205820-8dc363685efd/go.mod h1:NsMmZrhosN8FwLZbqxWIxjjZ5p4ketjnTv4EtdTLunY=
 github.com/seventv/common v0.0.0-20221211205632-bab03db2e420 h1:k5WG5rga+EUjh5X78vVHIIqoPH3l6eoZXi+F91lm2Uc=
 github.com/seventv/common v0.0.0-20221211205632-bab03db2e420/go.mod h1:jHHFe3uNMyzb/ReDqMvaI/A1euvV/PW/G+2PhcWQqWw=
+github.com/seventv/common v0.0.0-20230219165435-8b3b037a12ce h1:8w6uxwWHBlS1R1zV9ZNVDsNV2VFjgiVc/RaDKnQiCjA=
+github.com/seventv/common v0.0.0-20230219165435-8b3b037a12ce/go.mod h1:jHHFe3uNMyzb/ReDqMvaI/A1euvV/PW/G+2PhcWQqWw=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/sirupsen/logrus v1.4.2/go.mod h1:tLMulIdttU9McNUspp0xgXVQah82FyeX6MwdIuYE2rE=
 github.com/sirupsen/logrus v1.6.0/go.mod h1:7uNnSEd1DgxDLC74fIahvMZmmYsHGZGEOFrfsX/uA88=

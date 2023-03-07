@@ -7,7 +7,7 @@ require (
 	github.com/bwmarrin/discordgo v0.26.1
 	github.com/prometheus/client_golang v1.13.0
 	github.com/seventv/api v0.0.0-20221211205820-8dc363685efd
-	github.com/seventv/common v0.0.0-20221211205632-bab03db2e420
+	github.com/seventv/common v0.0.0-20230219165435-8b3b037a12ce
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.12.0
 	go.uber.org/zap v1.23.0
