@@ -1,0 +1,33 @@
+level: info
+
+cdn_url: ${cdn_url}
+website_url: ${website_url}
+
+http:
+  addr: "0.0.0.0"
+  port: 3000
+
+discord:
+  guild_id: ${discord_guild_id}
+  token: ${discord_token}
+  channels:
+    activity_feed: "817375925271527449"
+    mod_logs: "989251544165777450"
+    mod_actor_tracker: "1080982942156869743"
+    events: "1015281319758004335"
+
+mongo:
+  db: ${mongo_db}
+  mongo_uri: ${mongo_uri}
+
+redis:
+  addresses:
+    - ${redis_address}
+  database: 1
+  master_name: mymaster
+  password: ${redis_password}
+  sentinel: true
+
+health:
+  enabled: true
+  bind: 0.0.0.0:9200
