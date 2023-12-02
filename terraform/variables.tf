@@ -37,10 +37,6 @@ variable "image_pull_policy" {
   default = "Always"
 }
 
-variable "discord_client_id" {
-  type = string
-}
-
 variable "discord_bot_token" {
   type = string
 }
