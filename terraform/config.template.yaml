@@ -1,0 +1,38 @@
+# Log level
+level: info
+
+discord:
+  guild_id: ${discord_guild_id}
+  default_role_id: ${discord_default_role_id}
+  token: ${discord_bot_token}
+  channels:
+    activity_feed: ${ch_activity_feed}
+    mod_logs: ${ch_mod_logs}
+    mod_actor_tracker: ${ch_mod_actor_tracker}
+    events: ${ch_events}
+
+http:
+  addr: "0.0.0.0"
+  port: 3000
+
+# MongoDB Settings
+mongo:
+  uri: ${mongo_uri}
+  db: ${mongo_db}
+  username: ${mongo_username}
+  password: ${mongo_password}
+  direct: false
+
+# Redis Settings
+redis:
+  addresses:
+    - redis-node-0.redis-headless.database.svc.cluster.local:26379
+    - redis-node-1.redis-headless.database.svc.cluster.local:26379
+    - redis-node-2.redis-headless.database.svc.cluster.local:26379
+    - redis-node-3.redis-headless.database.svc.cluster.local:26379
+    - redis-node-4.redis-headless.database.svc.cluster.local:26379
+  sentinel: true
+  master_name: "mymaster"
+  username: ${redis_username}
+  password: ${redis_password}
+  database: 0
