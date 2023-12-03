@@ -91,9 +91,11 @@ func main() {
 
 	{
 		gctx.Inst().Mongo, err = mongo.Setup(gctx, mongo.SetupOptions{
-			URI:    config.Mongo.URI,
-			DB:     config.Mongo.DB,
-			Direct: config.Mongo.Direct,
+			URI:      config.Mongo.URI,
+			DB:       config.Mongo.DB,
+			Username: config.Mongo.Username,
+			Password: config.Mongo.Password,
+			Direct:   config.Mongo.Direct,
 		})
 		if err != nil {
 			zap.S().Fatalw("failed to setup mongo handler",
@@ -119,7 +121,7 @@ func main() {
 	}
 
 	{
-		gctx.Inst().Query = query.New(gctx.Inst().Mongo, gctx.Inst().Redis)
+		gctx.Inst().Query = query.New(gctx.Inst().Mongo, gctx.Inst().Redis, nil)
 	}
 
 	wg := sync.WaitGroup{}

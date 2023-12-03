@@ -15,14 +15,24 @@ import (
 
 func SyncUser(gctx global.Context, ctx context.Context, req compactdisc.Request[compactdisc.RequestPayloadSyncUser]) error {
 	userID := req.Data.UserID
+	guildID := gctx.Config().Discord.GuildID
+
+	z := zap.S().Named("api/SyncUser").With(
+		"user_id", userID.Hex(),
+		"guild_id", guildID,
+	)
 
 	appRoles, err := gctx.Inst().Query.Roles(ctx, bson.M{})
 	if err != nil {
+		z.Errorw("failed to query roles", "error", err)
+
 		return err
 	}
 
 	user, err := gctx.Inst().Query.Users(ctx, bson.M{"_id": userID}).First()
 	if err != nil {
+		z.Errorw("failed to query user", "error", err)
+
 		return err
 	}
 
@@ -32,13 +42,14 @@ func SyncUser(gctx global.Context, ctx context.Context, req compactdisc.Request[
 	}
 
 	dis := gctx.Inst().Discord.Session()
-	guildID := gctx.Config().Discord.GuildID
 
-	z := zap.S().Named("api/SyncUser").With(
+	z = zap.S().Named("api/SyncUser").With(
 		"user_id", userID.Hex(),
 		"guild_id", guildID,
 		"discord_id", con.ID,
 	)
+
+	z.Debug()
 
 	member, err := dis.State.Member(guildID, con.ID)
 	if err != nil { // member is not in state, so we must fetch them
