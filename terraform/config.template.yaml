@@ -1,5 +1,5 @@
 # Log level
-level: info
+level: debug
 
 cdn_url: cdn.7tv.app
 website_url: https://7tv.app
