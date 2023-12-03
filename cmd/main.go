@@ -121,7 +121,7 @@ func main() {
 	}
 
 	{
-		gctx.Inst().Query = query.New(gctx.Inst().Mongo, gctx.Inst().Redis)
+		gctx.Inst().Query = query.New(gctx.Inst().Mongo, gctx.Inst().Redis, nil)
 	}
 
 	wg := sync.WaitGroup{}
