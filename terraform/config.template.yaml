@@ -1,6 +1,9 @@
 # Log level
 level: info
 
+cdn_url: cdn.7tv.app
+website_url: https://7tv.app
+
 discord:
   guild_id: ${discord_guild_id}
   default_role_id: ${discord_default_role_id}
@@ -36,3 +39,7 @@ redis:
   username: ${redis_username}
   password: ${redis_password}
   database: 0
+
+health:
+  enabled: true
+  bind: 0.0.0.0:9200
